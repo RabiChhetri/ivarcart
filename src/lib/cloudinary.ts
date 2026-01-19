@@ -21,8 +21,16 @@ const uploadOnCloudinary = async (file: Blob): Promise<string | null> => {
                 if(error){
                     reject(error)
                 }
+                else{
+                    resolve(result?.secure_url ?? null)
+                }
             }
         )
+        uploadStream.end(buffer)
     })
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+    return null
+  }
 };
+export default uploadOnCloudinary

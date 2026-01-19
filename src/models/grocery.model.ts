@@ -10,6 +10,7 @@ interface IGrocery {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
 const grocerySchema = new mongoose.Schema<IGrocery>(
   {
     name: {
@@ -28,29 +29,30 @@ const grocerySchema = new mongoose.Schema<IGrocery>(
         "Personal Care",
         "Household Essentials",
         "Instant & Packaged Food",
-        "Baby & Pet Care",
+        "Baby & Pet Care"
       ],
-      required:true
+      required: true,
     },
-    unit:{
-        types:String,
-        required:true
+    price: {
+      type: String,
+      required: true,
     },
-    price:{
-        type:String,
-        required:true
+    unit: {
+      type: String,
+      required: true,
+      enum:[
+        "kg", "g", "liter", "ml", "piece", "pack"
+      ]
     },
-    image:{
-        type:String,
-        required:true
-    }
-    
+    image: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
-  },
-);
+  }
+)
 
-const Grocery=mongoose.models.Grocery || mongoose.model("Grocery",grocerySchema)
+const Grocery = mongoose.models.Grocery || mongoose.model("Grocery",grocerySchema)
 export default Grocery
-

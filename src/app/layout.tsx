@@ -3,6 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Provider from "@/Provider";
 import StoreProvider from "@/redux/StoreProvider";
+import InitUser from "@/InitUser";
 
 
 export const metadata: Metadata = {
@@ -20,7 +21,8 @@ export default function RootLayout({
       <body className="w-full min-h-[200vh] bg-linear-to-b from-green-50 to-white">
         <Provider>
           <StoreProvider>
-            {children}
+            <InitUser/>
+              {children}
           </StoreProvider>
         </Provider>
       </body>

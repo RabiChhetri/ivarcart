@@ -171,7 +171,7 @@ function Navbar({ user }: { user: IUser }) {
 
             {/* Cart */}
             <Link
-              href="/cart"
+              href="/user/cart"
               className="relative bg-white rounded-full w-11 h-11 flex items-center justify-center shadow-md hover:scale-105 transition"
             >
               <ShoppingCart className="text-green-600 w-6 h-6" />

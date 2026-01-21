@@ -36,7 +36,7 @@ const markerIcon = new L.Icon({
 });
 function Checkout() {
   const { userData } = useSelector((state: RootState) => state.user);
-  const { subTotal,deliveryFee,finalTotal } = useSelector((state: RootState) => state.cart);
+  const { subTotal,deliveryFee,finalTotal,cartData } = useSelector((state: RootState) => state.cart);
   const [address, setAddress] = useState({
     fullName: "",
     mobile: "",
@@ -124,6 +124,9 @@ function Checkout() {
   }, [position]);
 
   const handleCurrentLoaction = () => {
+    if(!position){
+      return null
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -137,6 +140,36 @@ function Checkout() {
       );
     }
   };
+  const handleCod=async()=>{
+    try {
+      const result= await axios.post("/api/user/order",{
+        userId:userData?._id,
+        items:cartData.map(item=>({
+          grocery:item._id,
+          name:item.name,
+          price:item.price,
+          unit:item.unit,
+          quantity:item.quantity,
+          image:item.image
+        })),
+        totalAmount:finalTotal,
+        address:{
+          fullName:address.fullName,
+          mobile:address.mobile,
+          city:address.city,
+          state:address.state,
+          pincode:address.pincode,
+          fullAddress:address.fullAddress,
+          latitude:position?.[0]??null,
+          longitude:position?.[1]??null
+        },
+        paymentMethod
+      })
+      console.log(result.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="w-[92%] md:w-[80%] mx-auto py-10 relative">
       <motion.button
@@ -339,6 +372,13 @@ function Checkout() {
             </div>
           </div>
           <motion.button 
+          onClick={()=>{
+            if(paymentMethod=="cod"){
+              handleCod()
+            }else{
+              null
+            }
+          }}
           whileTap={{scale:0.93}}
           className="w-full mt-6 bg-green-600 text-white py-3 rounded-full hover:bg-green-700 transition-all font-semibold">
             {paymentMethod=="cod"?"Place Order":"Pay and Place Order"}

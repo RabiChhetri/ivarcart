@@ -270,7 +270,7 @@ function Navbar({ user }: { user: IUser }) {
                 {/* Orders */}
                 {user.role == "user" && (
                   <Link
-                    href="/orders"
+                    href="/user/my-order"
                     className="flex items-center gap-2 px-3 py-3 hover:bg-green-50 rounded-lg text-gray-700 font-medium"
                     onClick={() => setOpen(false)}
                   >

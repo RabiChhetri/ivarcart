@@ -86,7 +86,7 @@
 
 import mongoose from "mongoose";
 
-interface IOrder {
+export interface IOrder {
   user: mongoose.Types.ObjectId;
   items: {
     grocery: mongoose.Types.ObjectId;

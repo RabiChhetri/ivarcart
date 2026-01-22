@@ -7,9 +7,16 @@ import Image from "next/image";
 import { button } from "motion/react-m";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { getSocket } from "@/lib/socket";
 
 function HeroSection() {
-  
+  const {userData}=useSelector((state:RootState)=>state.user)
+  useEffect(()=>{
+    if(userData){
+      let socket=getSocket()
+      socket.emit("identity",userData?._id)
+    }
+  },[userData])
   const slides = [
     {
       id: 1,

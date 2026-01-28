@@ -6,6 +6,7 @@ import axios from 'axios'
 import { RootState } from '@/redux/store'
 import { getSocket } from '@/lib/socket'
 import LiveMap from './LiveMap'
+import DeliveryChat from './DeliveryChat'
 
 interface ILocation{
     latitude:number,
@@ -118,13 +119,14 @@ const [deliveryBoyLocation,setDeliveryBoyLocation]=useState<ILocation>(
             <div className='rounded-xl border shadow-lg overflow-hidden mb-6'>
                 <LiveMap userLocation={userLocation} deliveryBoyLocation={deliveryBoyLocation}/>
             </div>
+            <DeliveryChat orderId={activeOrder.order._id} deliveryBoyId={userData?._id!}/>
           </div>
         ) : (
           <>
             <h2 className="text-2xl font-bold mt-[120px] mb-[30px]">Delivery Assignments</h2>
             {assignments.length > 0 ? (
-              assignments.map((a) => (
-                <div key={a._id} className="p-5 bg-white rounded-xl mb-4 border">
+              assignments.map((a,index) => (
+                <div key={index} className="p-5 bg-white rounded-xl mb-4 border">
                   <p>
                     <b>Order Id:</b> #{a?.order?._id?.slice(-6)}
                   </p>
